@@ -209,7 +209,7 @@ def fetch_bitbucket_archive(repo_ref: BitbucketRepoRef, destination: Path, token
 def _extract_tar_gz(archive_path: Path, destination_dir: Path) -> Path:
     destination_dir.mkdir(parents=True, exist_ok=True)
     with tarfile.open(archive_path, "r:gz") as archive:
-        archive.extractall(destination_dir)  # noqa: S202 — same trust model as GitHub fetcher
+        archive.extractall(path=destination_dir, filter="data")
     children = [p for p in destination_dir.iterdir() if p.is_dir()]
     if not children:
         # Some hosts emit a flat archive with files at the root.
